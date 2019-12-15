@@ -1,0 +1,25 @@
+package {{package}};
+
+{{#imports}}{{#import}}import {{import}};
+{{/import}}{{/imports}}
+{{#operations}}
+public class {{classname}} {
+    {{#operation}}@{{httpMethod}}("{{path}}")
+    {{#hasProduces}}{{#produces}}{{{annotation}}}{{#hasMore}}
+    {{/hasMore}}{{/produces}}{{/hasProduces}}{{#hasConsumes}}
+    {{#consumes}}{{{annotation}}}{{#hasMore}}
+    {{/hasMore}}{{/consumes}}{{/hasConsumes}}
+    @Description("{{{summary}}}")
+    public HttpResponse {{{operationId}}}({{#allParams}}
+        {{>queryParams}}{{>headerParams}}{{>pathParams}}{{#vendorExtensions.x-is-support-multipart}}{{>multipartParams}}{{/vendorExtensions.x-is-support-multipart}}{{^vendorExtensions.x-is-support-multipart}}{{>formParams}}{{/vendorExtensions.x-is-support-multipart}}{{>bodyParams}}{{#hasMore}},{{/hasMore}}{{#-last}}
+    {{/-last}}{{/allParams}}) {
+        /*
+         *  TODO: Implement `{{{operationId}}}` method{{#responses}}{{#dataType}}
+         *  Response Type: {{{dataType}}}{{/dataType}}{{/responses}}
+         */
+        return HttpResponse.of(HttpStatus.OK);
+    }{{#hasMore}}
+
+    {{/hasMore}}{{/operation}}
+}
+{{/operations}}
